@@ -8,13 +8,14 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-COPY package.json ./
+COPY package*.json ./
 
 RUN npm install -g nodemon cross-env eslint npm-run-all node-gyp node-pre-gyp \
-  && npm install\
-  && npm rebuild bcrypt --build-from-source
+  && npm install
 
 COPY . .
+
+RUN npm rebuild bcrypt --build-from-source
 
 EXPOSE 3000
 
