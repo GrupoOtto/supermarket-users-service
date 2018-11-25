@@ -26,6 +26,7 @@
     "http-errors": "^1.7.1",
     "http-status": "^1.2.0",
     "joi": "^13.6.0",
+    "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.2.14"
   },
   "devDependencies": {
