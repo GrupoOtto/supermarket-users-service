@@ -13,8 +13,8 @@ exports.signIn = async (email, password) => {
   if(!await user.validPassword(password))
     throw error(401, "Invalid Password");
 
-  const { id, username } = user
-  const payload = { id, username, email }
+  const { id: sub, username } = user
+  const payload = { sub, username, email }
   return { token: jwt.sign(payload, secret, options) }
 };
 
