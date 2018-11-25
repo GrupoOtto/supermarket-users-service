@@ -1,12 +1,28 @@
-const errors = require('http-errors');
+const error = require('http-errors');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const secret = "Shhhhhh"
+const options = {
+  expiresIn: "1d",
+}
 
 exports.signIn = async (email, password) => {
   const user = await User.findOne({ email });
 
   if(!await user.validPassword(password))
-    throw errors(401, "Invalid Password");
+    throw error(401, "Invalid Password");
 
-  return user
+  const { id, username } = user
+  const payload = { id, username, email }
+  return { token: jwt.sign(payload, secret, options) }
+};
+
+exports.valid = async (token) => {
+  try {
+    const payload = jwt.verify(token, secret)
+    return { payload }
+  } catch(err) {
+    throw error(401, "Invalid Token")
+  }
 };
