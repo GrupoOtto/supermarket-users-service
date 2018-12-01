@@ -15,154 +15,34 @@
 
 #### ObjectId : `Hexadecimal`
 
-#### TypeRef : `Object`
+#### User : `Object`
 
-| Property       | Type       | Required | Description                               |
-| -------------- | ---------- | -------- | ----------------------------------------- |
-| `id`           | `ObjectId` | ✔        | An unique identification for the type.    |
-| `initials`     | `String`   | ✔        | The representative initials.              |
-| `descriptions` | `String`   | ✔        | A human-readable description of the type. |
+| Property   | Type       | Required | Description                            |
+| ---------- | ---------- | -------- | -------------------------------------- |
+| `id`       | `ObjectId` | ✔        | An unique identification for the user. |
+| `username` | `String`   | ✔        | An unique username.                    |
+| `email`    | `String`   | ✔        | The e-mail address of the user.        |
+| `avatar`   | `String`   |          | Reference to an image.                 |
+| `password` | `String`   |          | An encrypted password.                 |
 
-#### Product : `Object`
+## 2 Endpoints
 
-| Property    | Type       | Required | Description                               |
-| ----------- | ---------- | -------- | ----------------------------------------- |
-| `id`        | `ObjectId` | ✔        | An unique identification for the product. |
-| `name`      | `String`   | ✔        | The name of the product.                  |
-| `salePrice` | `Number`   | ✔        | The sale price of the product.            |
-| `costPrice` | `Number`   | ✔        | The cost price of the product.            |
-| `type`      | `TypeRef`  |          | The type of product its refer.            |
+- `GET: /valid`
 
-### 1.3 Queries
+  Returns whether or not is a valid user.
 
-#### Likeable : `Object`
+  **HTTP HEADERS**
 
-| Property | Type     | Required | Description                            |
-| -------- | -------- | -------- | -------------------------------------- |
-| `$regex` | `String` | ✔        | A regular expression pattern to match. |
+  | Name            | Type     | Required | Description       |
+  | --------------- | -------- | -------- | ----------------- |
+  | `authorization` | `String` | ✔        | A JSON Web Token. |
 
-#### Numerable : `Object`
+- `POST: /login`
 
-| Property | Type     | Required | Description                     |
-| -------- | -------- | -------- | ------------------------------- |
-| `$gt`    | `Number` |          | An upper bound number.          |
-| `$gte`   | `Number` |          | An upper bound or equal number. |
-| `$lt`    | `Number` |          | A lower bound number.           |
-| `$lte`   | `Number` |          | A lower bound or equal number.  |
+  Validates provided data and if so, returns a JSON with the user's token.
 
-#### QueryNumber : `(Number | Numerable)`
+  **Body Params**
 
-#### QueryString : `(String | Likeable)`
-
-## 2 Supported Methods
-
-Method  | Description                                                                                                                | Is Idempotent
-------- | -------------------------------------------------------------------------------------------------------------------------- | -------------
-GET     | Return the current value of an object                                                                                      | True
-PUT     | Replace an object, or create a named object, when applicable                                                               | True
-DELETE  | Delete an object                                                                                                           | True
-POST    | Create a new object based on the data provided, or submit a command                                                        | False
-HEAD    | Return metadata of an object for a GET response. Resources that support the GET method MAY support the HEAD method as well | True
-PATCH   | Apply a partial update to an object                                                                                        | False
-
-## 3 Endpoints
-
-- `/`
-
-  - `GET : Product[]`
-
-    Returns all products that satisfy the query filter
-
-    **Query Parameters**
-
-    | Property    | Type          | Required | Description                         |
-    | ----------- | ------------- | -------- | ----------------------------------- |
-    | `name`      | `QueryString` | ✔        | The name of the product.            |
-    | `salePrice` | `QueryNumber` | ✔        | The sale price of the product.      |
-    | `costPrice` | `QueryNumber` | ✔        | The cost price of the product.      |
-    | `type`      | `ObjectID`    |          | The reference of product's type.    |
-
-  - `POST : Product`
-
-    **Body**
-
-    | Property    | Type       | Required | Description                      |
-    | ----------- | ---------- | -------- | -------------------------------- |
-    | `name`      | `String`   | ✔        | The name of the product.         |
-    | `salePrice` | `Number`   | ✔        | The sale price of the product.   |
-    | `costPrice` | `Number`   | ✔        | The cost price of the product.   |
-    | `type`      | `ObjectID` |          | The reference of product's type. |
-
-- `/{id}`
-
-  - `GET : Product`
-
-  - `PUT : Product`
-
-    **Body**
-
-    | Property    | Type       | Required | Description                         |
-    | ----------- | ---------- | -------- | ----------------------------------- |
-    | `name`      | `String`   | ✔        | The name of the product.            |
-    | `salePrice` | `Number`   | ✔        | The sale price of the product.      |
-    | `costPrice` | `Number`   | ✔        | The cost price of the product.      |
-    | `type`      | `ObjectID` |          | The reference of product's type.    |
-
-  - `PATCH : Product`
-
-    **Body**
-
-    | Property    | Type       | Required | Description                         |
-    | ----------- | ---------- | -------- | ----------------------------------- |
-    | `name`      | `String`   |          | The name of the product.            |
-    | `salePrice` | `Number`   |          | The sale price of the product.      |
-    | `costPrice` | `Number`   |          | The cost price of the product.      |
-    | `type`      | `ObjectID` |          | The reference of product's type.    |
-
-  - `DELETE : Product`
-
-- `/types`
-
-  - `GET : TypeRef[]`
-
-    Returns all product types that satisfy the query filter
-
-    **Query Parameters**
-
-    | Property      | Type          | Required | Description                      |
-    | ------------- | ------------- | -------- | -------------------------------- |
-    | `initials`    | `QueryString` |          | The initials of the type.        |
-    | `description` | `QueryString` |          | The description of the product. |
-
-  - `POST : TypeRef`
-
-    **Body**
-
-    | Property       | Type       | Required | Description                               |
-    | -------------- | ---------- | -------- | ----------------------------------------- |
-    | `initials`     | `String`   | ✔        | The representative initials.              |
-    | `descriptions` | `String`   | ✔        | A human-readable description of the type. |
-
-- `/types/{id}`
-
-  - `GET : TypeRef`
-
-  - `PUT : TypeRef`
-
-    **Body**
-
-    | Property       | Type       | Required | Description                               |
-    | -------------- | ---------- | -------- | ----------------------------------------- |
-    | `initials`     | `String`   | ✔        | The representative initials.              |
-    | `descriptions` | `String`   | ✔        | A human-readable description of the type. |
-
-  - `PATCH : TypeRef`
-
-    **Body**
-
-    | Property       | Type       | Required | Description                               |
-    | -------------- | ---------- | -------- | ----------------------------------------- |
-    | `initials`     | `String`   |          | The representative initials.              |
-    | `descriptions` | `String`   |          | A human-readable description of the type. |
-
-  - `DELETE : TypeRef`
+  | Name            | Type     | Required | Description       |
+  | --------------- | -------- | -------- | ----------------- |
+  | `authorization` | `String` | ✔        | A JSON Web Token. |
