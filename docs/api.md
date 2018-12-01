@@ -22,8 +22,8 @@
 | `id`       | `ObjectId` | ✔        | An unique identification for the user. |
 | `username` | `String`   | ✔        | An unique username.                    |
 | `email`    | `String`   | ✔        | The e-mail address of the user.        |
-| `avatar`   | `String`   |          | Reference to an image.                 |
-| `password` | `String`   |          | An encrypted password.                 |
+| `avatar`   | `String`   | ✔        | Reference to an image.                 |
+| `password` | `String`   | ✔        | An encrypted password.                 |
 
 ## 2 Endpoints
 
