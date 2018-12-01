@@ -31,7 +31,7 @@
 
   Returns whether or not is a valid user.
 
-  **HTTP HEADERS**
+  **HTTP Headers**
 
   | Name            | Type     | Required | Description       |
   | --------------- | -------- | -------- | ----------------- |
@@ -43,6 +43,7 @@
 
   **Body Params**
 
-  | Name            | Type     | Required | Description       |
-  | --------------- | -------- | -------- | ----------------- |
-  | `authorization` | `String` | ✔        | A JSON Web Token. |
+  | Name       | Type     | Required | Description                     |
+  | ---------- | -------- | -------- | ------------------------------- |
+  | `email`    | `String` | ✔        | The e-mail address of the user. |
+  | `password` | `String` | ✔        | An encrypted password.          |
