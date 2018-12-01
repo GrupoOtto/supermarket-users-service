@@ -46,4 +46,4 @@
   | Name       | Type     | Required | Description                     |
   | ---------- | -------- | -------- | ------------------------------- |
   | `email`    | `String` | ✔        | The e-mail address of the user. |
-  | `password` | `String` | ✔        | An encrypted password.          |
+  | `password` | `String` | ✔        | The text-plain password.        |
